@@ -1,0 +1,9 @@
+-- Selecting the staff member who was hired earliest)
+
+SELECT last_name, hire_date as maxhiredate
+	FROM humanresources
+	 
+	 WHERE hire_date =
+		
+		(SELECT MAX(hire_date)
+		 FROM humanresources);

@@ -1,0 +1,12 @@
+-- Return hire date of a specific employee
+
+SELECT hdte.hire_date
+
+	FROM
+			humanresources hdte
+			INNER JOIN employees emps
+			ON emps.employee_id = hdte.employee_id
+	WHERE 
+			emps.first_name = 'Andrew'
+	AND 
+			emps.last_name = 'Fuller'

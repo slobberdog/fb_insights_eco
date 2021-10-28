@@ -1,0 +1,15 @@
+--Count the number of posts per employee between the dates 13/10 and 19/10 in fb_ecomain
+
+SELECT ecomain.emp_id AS employeecount, emps.first_name as fname
+
+	FROM 
+		employees emps
+		INNER JOIN fb_ecomain ecomain
+		ON 
+		emps.employee_id = ecomain.emp_id
+		
+	WHERE
+		ecomain.datepost >= '2021-10-13' AND
+		ecomain.datepost < '2021-10-20'
+		
+	GROUP BY employeecount,fname

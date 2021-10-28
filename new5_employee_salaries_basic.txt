@@ -1,0 +1,10 @@
+SELECT humres.salary as empsalary, emps.first_name as fname, emps.last_name as lname
+
+		FROM
+			humanresources humres
+			
+			INNER JOIN employees emps
+				ON humres.employee_id = emps.employee_id
+				
+		GROUP BY lname,fname, empsalary
+		ORDER BY lname ASC

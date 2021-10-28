@@ -1,0 +1,25 @@
+--Return employee id, first and last names concatenated and organic posts in excess of 200
+WITH ecoorgposts 
+AS
+	(SELECT emp_id as EmployeeNo, SUM(lt_postorgimp) as emporgpostsum, emps.first_name ||' '|| emps.last_name AS MemberName
+	 FROM 
+	 
+	 fb_ecomain ecomain
+	 INNER JOIN employees emps
+	   ON ecomain.emp_id = emps.employee_id
+
+	GROUP BY EmployeeNo, MemberName
+	
+		ORDER BY MemberName ASC)
+	,
+	commposts
+	AS
+	
+	(SELECT EmployeeNo, MemberName, emporgpostsum
+	FROM ecoorgposts
+
+	 )
+	 SELECT * FROM commposts
+	 WHERE commposts.emporgpostsum >200
+	 GROUP BY commposts.EmployeeNo, commposts.MemberName, commposts.emporgpostsum
+	ORDER BY commposts.EmployeeNo ASC;

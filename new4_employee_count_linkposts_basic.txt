@@ -1,0 +1,14 @@
+--Calculate the sime of the 'Link' organic posts by employee grouped by first name
+
+SELECT SUM(ecomain.lt_postorgimp) as emporgpostsum, emps.first_name as fname
+
+	FROM
+		fb_ecomain ecomain
+		
+		INNER JOIN employees emps
+			ON ecomain.emp_id = emps.employee_id
+		WHERE
+			ecomain.type = 'Link'
+			
+		GROUP BY fname
+					
