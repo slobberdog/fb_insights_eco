@@ -1,0 +1,44 @@
+--Return employee id, first and last names concatenated and organic posts in excess of 200 with salaries, commission id, lower and higher comm.
+
+	WITH ecoorgcomms 
+	AS
+	(SELECT emp_id as EmployeeNo, SUM(lt_postorgimp) as emporgpostsum, emps.first_name ||' '|| emps.last_name AS MemberName, humrescomm.salary as Salary,
+	  humrescomm.commstructure as Commissionid, sscale.commlower as LowerComm, sscale.commhigher as HigherComm
+	 
+	 FROM 
+	 
+	 humanresources humrescomm
+	 INNER JOIN slidingscalecomm sscale
+	   ON humrescomm.commstructure = sscale.value_id
+	 INNER JOIN employees emps
+	   ON humrescomm.employee_id = emps.employee_id
+	 INNER JOIN fb_ecomain ecomain
+	   ON humrescomm.employee_id = ecomain.emp_id
+
+	GROUP BY EmployeeNo, MemberName, Salary, Commissionid, LowerComm, HigherComm, Salary
+	
+		ORDER BY EmployeeNo ASC)
+	,
+	commposts
+	AS
+	
+	(SELECT EmployeeNo, MemberName, Salary, Commissionid, emporgpostsum, LowerComm, HigherComm,
+	
+	(CASE
+	 	WHEN emporgpostsum < 250 
+	 	THEN CAST(Salary * (LowerComm/100) AS INTEGER)
+
+	 	ELSE
+	    CAST(Salary * (HigherComm/100) AS INTEGER) 
+	 END) AS CommPlusSalary
+	 
+	FROM ecoorgcomms
+	 )
+		
+	(SELECT * FROM commposts
+	 WHERE commposts.emporgpostsum >200
+	 GROUP BY commposts.EmployeeNo, commposts.MemberName, commposts.Salary, commposts.CommPlusSalary, commposts.Commissionid, commposts.LowerComm, commposts.HigherComm, commposts.emporgpostsum 
+	ORDER BY commposts.EmployeeNo ASC
+	 
+	 );
+	
