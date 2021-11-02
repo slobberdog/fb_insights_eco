@@ -1,4 +1,4 @@
---Return employee id, first and last names concatenated and organic posts in excess of 200 with salaries, commission id, lower and higher comm.
+--Return employee id, first and last names concatenated and organic posts in excess of 200 with salaries, commission id, lower and higher comm with commearned.
 
 	WITH ecoorgcomms 
 	AS
